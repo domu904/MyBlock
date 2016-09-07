@@ -231,13 +231,13 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.new = function() {
     if (this.currentProvider == null) {
-      throw new Error("ConvertLib error: Please call setProvider() first before calling new().");
+      throw new Error("People error: Please call setProvider() first before calling new().");
     }
 
     var args = Array.prototype.slice.call(arguments);
 
     if (!this.unlinked_binary) {
-      throw new Error("ConvertLib error: contract binary not set. Can't deploy new instance.");
+      throw new Error("People error: contract binary not set. Can't deploy new instance.");
     }
 
     var regex = /__[^_]+_+/g;
@@ -256,7 +256,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         return name != arr[index + 1];
       }).join(", ");
 
-      throw new Error("ConvertLib contains unresolved libraries. You must deploy and link the following libraries before you can deploy a new version of ConvertLib: " + unlinked_libraries);
+      throw new Error("People contains unresolved libraries. You must deploy and link the following libraries before you can deploy a new version of People: " + unlinked_libraries);
     }
 
     var self = this;
@@ -297,7 +297,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.at = function(address) {
     if (address == null || typeof address != "string" || address.length != 42) {
-      throw new Error("Invalid address passed to ConvertLib.at(): " + address);
+      throw new Error("Invalid address passed to People.at(): " + address);
     }
 
     var contract_class = this.web3.eth.contract(this.abi);
@@ -308,7 +308,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.deployed = function() {
     if (!this.address) {
-      throw new Error("Cannot find deployed address: ConvertLib not deployed or address not set.");
+      throw new Error("Cannot find deployed address: People not deployed or address not set.");
     }
 
     return this.at(this.address);
@@ -353,27 +353,56 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         "constant": false,
         "inputs": [
           {
-            "name": "amount",
-            "type": "uint256"
+            "name": "_firstName",
+            "type": "string"
           },
           {
-            "name": "conversionRate",
+            "name": "_lastName",
+            "type": "string"
+          },
+          {
+            "name": "_age",
             "type": "uint256"
           }
         ],
-        "name": "convert",
+        "name": "addPerson",
         "outputs": [
           {
-            "name": "convertedAmount",
+            "name": "success",
+            "type": "bool"
+          }
+        ],
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "people",
+        "outputs": [
+          {
+            "name": "firstName",
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "type": "string"
+          },
+          {
+            "name": "age",
             "type": "uint256"
           }
         ],
         "type": "function"
       }
     ],
-    "unlinked_binary": "0x606060405260358060106000396000f36503063fc68da550606060405260e060020a600035046396e4ee3d81146024575b6007565b602435600435026060908152602090f3",
+    "unlinked_binary": "0x6060604052610475806100126000396000f3606060405260e060020a60003504634847e01b81146100265780639e7a13ad14610112575b005b6040805160206004803580820135601f8101849004840285018401909552848452610146949193602493909291840191908190840183828082843750506040805160208835808b0135601f8101839004830284018301909452838352979998604498929750919091019450909250829150840183828082843750949650509335935050505060408051608081018252600060608201818152825282516020818101855290829052868352820185905291810183905281546001810180845583919082818380158290116102665760030281600302836000526020600020918201910161026691906102eb565b61015a6004356000805482908110156100025790600052602060002090600302016000506002810154909150600182019083565b604080519115158252519081900360200190f35b604080519081018290526060808252845460026001821615610100026000190190911604908201819052819060208201906080830190879080156101df5780601f106101b4576101008083540402835291602001916101df565b820191906000526020600020905b8154815290600101906020018083116101c257829003601f168201915b5050838103825285546002600182161561010002600019019091160480825260209190910190869080156102545780601f1061022957610100808354040283529160200191610254565b820191906000526020600020905b81548152906001019060200180831161023757829003601f168201915b50509550505050505060405180910390f35b5050509190906000526020600020906003020160008390919091506000820151816000016000509080519060200190828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061039a57805160ff19168380011785555b506103ca929150610364565b5050600060028201556003015b8082111561037857600060008201600050805460018160011615610100020316600290046000825580601f1061034a57505b5060018201600050805460018160011615610100020316600290046000825580601f1061037c57506102de565b601f01602090049060005260206000209081019061031d91905b808211156103785760008155600101610364565b5090565b601f0160209004906000526020600020908101906102de9190610364565b828001600101855582156102d2579182015b828111156102d25782518260005055916020019190600101906103ac565b50506020820151816001016000509080519060200190828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061042957805160ff19168380011785555b50610459929150610364565b8280016001018555821561041d579182015b8281111561041d57825182600050559160200191906001019061043b565b505060409190910151600291909101555060019594505050505056",
     "events": {},
-    "updated_at": 1473275162305,
+    "updated_at": 1473275162307,
     "links": {}
   }
 };
@@ -459,7 +488,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
     Contract.links[name] = address;
   };
 
-  Contract.contract_name   = Contract.prototype.contract_name   = "ConvertLib";
+  Contract.contract_name   = Contract.prototype.contract_name   = "People";
   Contract.generated_with  = Contract.prototype.generated_with  = "3.2.0";
 
   // Allow people to opt-in to breaking changes now.
@@ -499,6 +528,6 @@ var SolidityEvent = require("web3/lib/web3/event.js");
   } else {
     // There will only be one version of this contract in the browser,
     // and we can use that.
-    window.ConvertLib = Contract;
+    window.People = Contract;
   }
 })();

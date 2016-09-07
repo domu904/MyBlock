@@ -20,8 +20,8 @@ contract People {
   }
 
   //solidity can't return structs. so we will return the following array if strings and uint
-  function getPeople() constant returns (string[], string[], uint[]) {
+  //function getPeople() constant returns (string[] _name, string[] _lastName, uint[] _age) {
 
-  }
+  //}
 
 }
